@@ -1,5 +1,9 @@
-var gulp = require('gulp');
-var googleWebFonts = require('gulp-google-webfonts');
+var gulp = require('gulp'),
+  googleWebFonts = require('gulp-google-webfonts'),
+  cleanCSS = require('gulp-clean-css'),
+  concat = require('gulp-concat'),
+  sourcemaps = require('gulp-sourcemaps'),
+  uglify = require('gulp-uglify');
 
 gulp.task('fonts', function () {
   var options = {
@@ -26,18 +30,33 @@ gulp.task('html-copy',function(){
 
 gulp.task('css-copy',function(){
   return gulp
-    .src(['node_modules/daemonite-material/css/material.min.css',
-    'node_modules/bootstrap/dist/css/bootstrap.min.css'])
+    .src([
+      'node_modules/daemonite-material/css/material.css'
+    ], { base: 'node_modules' })
+    .pipe(sourcemaps.init())
+    .pipe(concat('main.css'))
+    .pipe(cleanCSS())
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./dist/css/'));
 });
 
 gulp.task('js-copy',function(){
   return gulp
-    .src(['node_modules/daemonite-material/js/material.min.js',
-      'node_modules/jquery/dist/jquery.min.js',
-      'node_modules/popper.js/dist/umd/popper.min.js',
-      'node_modules/bootstrap/dist/js/bootstrap.min.js'])
+    .src([
+      'node_modules/jquery/dist/jquery.js',
+      'node_modules/popper.js/dist/umd/popper.js',
+      'node_modules/bootstrap/dist/js/bootstrap.js',
+      'node_modules/daemonite-material/js/material.js'
+    ], { base: 'node_modules' })
+    .pipe(sourcemaps.init())
+    .pipe(concat('main.js'))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./dist/js/'));
+
+ //   .pipe(rename({
+ //     extname: '.min.js'
+//    }))
 });
 
 

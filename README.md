@@ -6,3 +6,8 @@ usage:
 $gulp init
 
 edit the index.html and voila
+
+Contains:
+
+- [Bootstrap 4](https://getbootstrap.com/docs/4.1/getting-started/introduction/)
+- [Daemonite material](http://daemonite.github.io/material/docs/4.1/getting-started/introduction/)
