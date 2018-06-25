@@ -40,6 +40,21 @@ gulp.task('css-copy',function(){
     .pipe(gulp.dest('./dist/css/'));
 });
 
+gulp.task('dc-copy',function(){
+  return gulp
+    .src([
+      'node_modules/crossfilter2/crossfilter.js',
+      'node_modules/reductio/reductio.js',
+      'node_modules/d3/dist/d3.js',
+      'node_modules/dc/dc.js'
+    ], { base: 'node_modules' })
+    .pipe(sourcemaps.init())
+    .pipe(concat('dcbundle.js'))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('./dist/js/'));
+});
+
 gulp.task('js-copy',function(){
   return gulp
     .src([
@@ -53,10 +68,6 @@ gulp.task('js-copy',function(){
     .pipe(uglify())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./dist/js/'));
-
- //   .pipe(rename({
- //     extname: '.min.js'
-//    }))
 });
 
 
