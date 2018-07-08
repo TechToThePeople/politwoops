@@ -40,7 +40,7 @@ gulp.task('css-copy',function(){
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./dist/css/'))
     .pipe(zip({gzipOptions: { level: 9 } }))
-    .pipe(gulp.dest('./dist/js/'));
+    .pipe(gulp.dest('./dist/css/'));
 });
 
 gulp.task('dc-copy',function(){
