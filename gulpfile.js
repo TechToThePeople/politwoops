@@ -3,7 +3,8 @@ var gulp = require('gulp'),
   cleanCSS = require('gulp-clean-css'),
   concat = require('gulp-concat'),
   sourcemaps = require('gulp-sourcemaps'),
-  uglify = require('gulp-uglify');
+  uglify = require('gulp-uglify'),
+  zip=require('gulp-gzip');
 
 gulp.task('fonts', function () {
   var options = {
@@ -37,7 +38,9 @@ gulp.task('css-copy',function(){
     .pipe(concat('main.css'))
     .pipe(cleanCSS())
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./dist/css/'));
+    .pipe(gulp.dest('./dist/css/'))
+    .pipe(zip({gzipOptions: { level: 9 } }))
+    .pipe(gulp.dest('./dist/js/'));
 });
 
 gulp.task('dc-copy',function(){
@@ -52,6 +55,8 @@ gulp.task('dc-copy',function(){
     .pipe(concat('dcbundle.js'))
     .pipe(uglify())
     .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('./dist/js/'))
+    .pipe(zip({gzipOptions: { level: 9 } }))
     .pipe(gulp.dest('./dist/js/'));
 });
 
@@ -67,6 +72,8 @@ gulp.task('js-copy',function(){
     .pipe(concat('main.js'))
     .pipe(uglify())
     .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('./dist/js/'))
+    .pipe(zip({gzipOptions: { level: 9 } }))
     .pipe(gulp.dest('./dist/js/'));
 });
 
@@ -76,8 +83,10 @@ gulp.task('css-minify',['css-compile'], function() {
       .pipe(cssmin())
       .pipe(rename({suffix: '.min'}))
       .pipe(gulp.dest('./dist/css'))
+      .pipe(zip({gzipOptions: { level: 9 } }))
+      .pipe(gulp.dest('./dist/css/'));
 });
 
 
-gulp.task('init', ['fonts','css-copy','js-copy']);
+gulp.task('default', ['fonts','css-copy','js-copy']);
 
